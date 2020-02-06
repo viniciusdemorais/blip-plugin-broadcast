@@ -1,0 +1,105 @@
+<div class="container mt-3">
+  <div class="d-flex">
+    <h5 class="d-flex mr-2">Dashboard</h5>
+    <span class="text-warning d-flex">
+      <mat-icon class="d-flex mr-2">warning</mat-icon>
+      <p class="page-subtitle d-flex">
+        Em Construção (conteúdo fictício)
+      </p>
+    </span>
+  </div>
+  <button (click)="toast()">Teste</button>
+  <p class="page-subtitle text-gray">Fique por dentro de tudo<br />e não perca nenhum detalhe.</p>
+  <app-page-loader *ngIf="loadingDashboard"></app-page-loader>
+  <div class="row">
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-header card-header-icon">
+          <div class="card-icon success-gradient">
+            <i class="material-icons fs-36">developer_board</i>
+          </div>
+          <p class="card-category">Flakes</p>
+          <h3 class="card-title">
+            113
+            <!-- <small>k</small> -->
+          </h3>
+        </div>
+        <div class="card-footer">
+          <div class="stats"><i class="material-icons">date_range</i> Último mês</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-header card-header-icon">
+          <div class="card-icon info-gradient">
+            <i class="material-icons fs-36">person_add</i>
+          </div>
+          <p class="card-category">Flaws</p>
+          <h3 class="card-title">123</h3>
+        </div>
+        <div class="card-footer">
+          <div class="stats"><i class="material-icons">date_range</i> Última semana</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-header card-header-icon">
+          <div class="card-icon blue-gradient">
+            <i class="material-icons fs-36">accessibility_new</i>
+          </div>
+          <p class="card-category">Flakes</p>
+          <h3 class="card-title">300</h3>
+        </div>
+        <div class="card-footer">
+          <div class="stats"><i class="material-icons">accessibility_new</i> Uhuuuuul</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-header card-header-icon">
+          <div class="card-icon warning-gradient">
+            <i class="material-icons fs-36">announcement</i>
+          </div>
+          <p class="card-category">Flaws</p>
+          <h3 class="card-title">22</h3>
+        </div>
+        <div class="card-footer">
+          <div class="stats"><i class="material-icons">sentiment_dissatisfied</i> Pessoas que não aceitaram</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 col-md-12">
+      <div class="card">
+        <div class="card-header blue-gradient card-header-tabs card-header-primary">
+          <h4 class="card-title text-white">Top colaboradores</h4>
+          <p class="card-category text-white">
+            Aqui estão listados os colaboradores que são mais flaws and flakes.
+          </p>
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-hover">
+            <thead class="text-blue">
+              <th>Nome</th>
+              <th>Participações</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Vinicius de Morais</td>
+                <td>100</td>
+              </tr>
+              <tr>
+                <td>Bruno Henrique Amaral Fonseca</td>
+                <td>99</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

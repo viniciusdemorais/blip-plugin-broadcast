@@ -1,0 +1,110 @@
+<div class="container mt-3">
+  <div>
+    <h5>Colaborador</h5>
+    <p class="page-subtitle text-gray">
+      Consulte e gerencie os Colaboradores,<br />
+      torne seu trabalho mais eficiente.
+    </p>
+  </div>
+
+  <app-page-loader *ngIf="loadingColaborador"></app-page-loader>
+
+  <div class="row mt-4">
+    <div class="col-md-12" *ngIf="!edit">
+      <button mat-raised-button class="mb-3" color="primary" (click)="addPerson()">
+        <mat-icon class="mr-2">person_add</mat-icon> Adicionar
+      </button>
+      <div class="table-responsive mat-elevation-z8">
+        <table mat-table [dataSource]="colaboradores">
+          <!-- Name Column -->
+          <ng-container matColumnDef="nome" sticky>
+            <th mat-header-cell *matHeaderCellDef>Nome</th>
+            <td mat-cell *matCellDef="let element">{{ element.nome }}</td>
+          </ng-container>
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="area">
+            <th mat-header-cell *matHeaderCellDef>Área</th>
+            <td mat-cell *matCellDef="let element">{{ getNameArea(element.idArea) }}</td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="cidade">
+            <th mat-header-cell *matHeaderCellDef>Cidade</th>
+            <td mat-cell *matCellDef="let element">{{ getNameCidade(element.idCidade) }}</td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions" stickyEnd>
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="primary" (click)="editColaborador(element.idColaborador)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteColaborador(element.idColaborador)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 p-0" *ngIf="edit">
+    <div class="card p-3">
+      <h1 mat-dialog-title>{{ titleForm }}</h1>
+      <form [formGroup]="personForm">
+        <div mat-dialog-content>
+          <p>{{ textForm }}</p>
+          <mat-grid-list cols="2" rowHeight="68px">
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Nome" id="nome" formControlName="nome" required />
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-checkbox> Cabuloso?</mat-checkbox>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Email" id="email" formControlName="email" required />
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field>
+                <mat-select formControlName="idArea" required>
+                  <mat-option *ngFor="let area of areas" [value]="area.idArea">{{ area.nome }}</mat-option>
+                </mat-select>
+                <mat-label> <mat-icon>emoji_objects</mat-icon> Área</mat-label>
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field>
+                <mat-select formControlName="idCidade" required>
+                  <mat-option *ngFor="let cidade of cidades" [value]="cidade.idCidade">{{ cidade.nome }}</mat-option>
+                </mat-select>
+                <mat-label> <mat-icon>location_city</mat-icon> Cidade</mat-label>
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>
+
+        <div mat-dialog-actions>
+          <button mat-raised-button class="float-right ml-3" (click)="saveColaborador()" color="primary">
+            Salvar
+          </button>
+          <button mat-raised-button class="float-right" (click)="resetForm(); edit = false">Fechar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

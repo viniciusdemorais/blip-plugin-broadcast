@@ -1,0 +1,25 @@
+<!-- <header>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <button mat-icon-button class="mr-3" (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <h1>My Project</h1>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</header> -->
+
+<mat-sidenav-container class="main-container">
+  <mat-sidenav #sidenav>
+    <mat-nav-list>
+      <a mat-list-item [routerLink]="''" (click)="sidenav.toggle()"
+        ><mat-icon class="mr-2">dashboard</mat-icon> Dashboard
+      </a>
+      <a mat-list-item [routerLink]="'/colaboradores'" (click)="sidenav.toggle()"
+        ><mat-icon class="mr-2">accessibility_new</mat-icon> Colaboradores
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <router-outlet></router-outlet>
+</mat-sidenav-container>

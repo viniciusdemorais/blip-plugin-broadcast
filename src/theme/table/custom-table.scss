@@ -1,0 +1,27 @@
+table {
+  width: 100%;
+  // overflow-x: auto;
+  // overflow-y: hidden;
+}
+
+th.mat-header-cell {
+  text-align: left;
+  max-width: 300px;
+}
+
+.mat-table-sticky:last-child {
+  text-align: center;
+}
+
+.action-link {
+  .edit {
+    a:hover {
+      color: $orange;
+    }
+  }
+  .delete {
+    a:hover {
+      color: $red;
+    }
+  }
+}
