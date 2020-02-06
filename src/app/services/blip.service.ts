@@ -34,7 +34,7 @@ export class BlipService {
   async withLoading() {
     this.startLoading();
     try {
-      return await this.showToast('Carregado');
+      return await this.showToast('Seja bem vindo');
     } finally {
       this.stopLoading();
     }
