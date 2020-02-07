@@ -18,6 +18,7 @@ import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { IframeService } from './services/iframe.service';
+import { BlipService } from './services/blip.service';
 
 registerLocaleData(localePt);
 
@@ -35,7 +36,7 @@ registerLocaleData(localePt);
     AppRoutingModule // must be imported as the last module as it contains the fallback route
   ],
   declarations: [AppComponent],
-  providers: [IframeService, { provide: LOCALE_ID, useValue: 'pt-BR' }],
+  providers: [IframeService, BlipService, { provide: LOCALE_ID, useValue: 'pt-BR' }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
