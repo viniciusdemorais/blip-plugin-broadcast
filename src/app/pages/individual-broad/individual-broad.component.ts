@@ -3,13 +3,13 @@ import { Subject } from 'rxjs';
 import { IframeService } from '@app/services/iframe.service';
 
 @Component({
-  selector: 'app-welcome',
-  templateUrl: './welcome.component.html',
-  styleUrls: ['./welcome.component.scss']
+  selector: 'app-individual-broad',
+  templateUrl: './individual-broad.component.html',
+  styleUrls: ['./individual-broad.component.scss']
 })
-export class WelcomeComponent implements OnInit, OnDestroy {
+export class IndividualBroadComponent implements OnInit, OnDestroy {
   unsub = new Subject();
-  loadingWelcome = false;
+  loadingIndividualBroad = false;
   constructor(private iframeService: IframeService) {}
 
   ngOnInit() {}

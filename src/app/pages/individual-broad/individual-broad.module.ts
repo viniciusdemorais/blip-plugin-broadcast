@@ -4,12 +4,12 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
-import { WelcomeComponent } from './welcome.component';
 import { MaterialModule } from '@app/shared/material/material-components.module';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { WelcomeRoutingModule } from './welcome-routing.module';
+import { IndividualBroadRoutingModule } from './individual-broad-routing.module';
 import { IframeService } from '@app/services/iframe.service';
+import { IndividualBroadComponent } from './individual-broad.component';
 
 @NgModule({
   imports: [
@@ -20,9 +20,9 @@ import { IframeService } from '@app/services/iframe.service';
     CoreModule,
     SharedModule,
     MaterialModule,
-    WelcomeRoutingModule
+    IndividualBroadRoutingModule
   ],
-  declarations: [WelcomeComponent],
+  declarations: [IndividualBroadComponent],
   providers: [IframeService]
 })
-export class WelcomeModule {}
+export class IndividualBroadModule {}
