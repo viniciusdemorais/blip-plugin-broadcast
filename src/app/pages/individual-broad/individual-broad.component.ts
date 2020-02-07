@@ -75,6 +75,7 @@ export class IndividualBroadComponent implements OnInit, OnDestroy {
   }
 
   selectedTemplate(event: any) {
+    this.templateVariables = [];
     this.template = this.templates.find(t => t.id == event.value);
     this.templateDescription = this.template.components.find((td: any) => td.type == 'BODY').text;
     const variables = this.templateDescription.match(/{{[0-9]*}}/gm) || [];
