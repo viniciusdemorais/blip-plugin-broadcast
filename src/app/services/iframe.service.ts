@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 const { IframeMessageProxy } = require('iframe-message-proxy');
 
 @Injectable()
-export class BlipService {
+export class IframeService {
   constructor() {
     IframeMessageProxy.listen();
   }
