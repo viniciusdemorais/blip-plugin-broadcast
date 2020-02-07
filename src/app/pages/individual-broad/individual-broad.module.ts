@@ -4,12 +4,12 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
-import { DashboardComponent } from './dashboard.component';
 import { MaterialModule } from '@app/shared/material/material-components.module';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DashboardRoutingModule } from './dashboard-routing.module';
+import { IndividualBroadRoutingModule } from './individual-broad-routing.module';
 import { IframeService } from '@app/services/iframe.service';
+import { IndividualBroadComponent } from './individual-broad.component';
 
 @NgModule({
   imports: [
@@ -20,9 +20,9 @@ import { IframeService } from '@app/services/iframe.service';
     CoreModule,
     SharedModule,
     MaterialModule,
-    DashboardRoutingModule
+    IndividualBroadRoutingModule
   ],
-  declarations: [DashboardComponent],
+  declarations: [IndividualBroadComponent],
   providers: [IframeService]
 })
-export class DashboardModule {}
+export class IndividualBroadModule {}

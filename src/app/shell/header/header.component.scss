@@ -1,5 +1,9 @@
 @import "src/theme/theme-variables";
 
+.mat-drawer-container {
+  height: 100%;
+}
+
 .main-container {
   position: absolute;
   bottom: 0;
@@ -8,6 +12,10 @@
   top: 0;
 }
 
-.mat-sidenav {
-  width: 216px;
+.w-318p {
+  width: 318px;
 }
+
+// .mat-sidenav {
+//   width: 216px;
+// }

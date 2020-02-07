@@ -3,13 +3,13 @@ import { Subject } from 'rxjs';
 import { IframeService } from '@app/services/iframe.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'app-individual-broad',
+  templateUrl: './individual-broad.component.html',
+  styleUrls: ['./individual-broad.component.scss']
 })
-export class DashboardComponent implements OnInit, OnDestroy {
+export class IndividualBroadComponent implements OnInit, OnDestroy {
   unsub = new Subject();
-  loadingDashboard = false;
+  loadingIndividualBroad = false;
   constructor(private iframeService: IframeService) {}
 
   ngOnInit() {}

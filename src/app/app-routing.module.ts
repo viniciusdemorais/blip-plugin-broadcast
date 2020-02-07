@@ -6,11 +6,7 @@ const routes: Routes = [
   Shell.childRoutes([
     {
       path: '',
-      loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule)
-    },
-    {
-      path: 'colaboradores',
-      loadChildren: () => import('./pages/colaborator/colaborator.module').then(m => m.ColaboratorModule)
+      loadChildren: () => import('./pages/individual-broad/individual-broad.module').then(m => m.IndividualBroadModule)
     }
   ])
 ];

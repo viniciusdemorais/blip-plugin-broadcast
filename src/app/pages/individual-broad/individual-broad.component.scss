@@ -1,0 +1,18 @@
+.title {
+  color: #52636c;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+.sub-title {
+  color: #52636c;
+  font-size: 1rem;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 2px;
+  transition: box-shadow 0.15s ease-in-out, transform 0.15s ease-in-out;
+  -ms-box-shadow: 0 2px 12px 0 #e1e7ee;
+  -o-box-shadow: 0 2px 12px 0 #e1e7ee;
+  box-shadow: 0 2px 12px 0 #e1e7ee;
+}
