@@ -8,8 +8,9 @@ import { MaterialModule } from '@app/shared/material/material-components.module'
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IndividualBroadRoutingModule } from './individual-broad-routing.module';
-import { IframeService } from '@app/services/iframe.service';
 import { IndividualBroadComponent } from './individual-broad.component';
+import { BlipService } from '@app/services/blip.service';
+import { NotificationService } from '@app/services/notification.service';
 
 @NgModule({
   imports: [
@@ -23,6 +24,6 @@ import { IndividualBroadComponent } from './individual-broad.component';
     IndividualBroadRoutingModule
   ],
   declarations: [IndividualBroadComponent],
-  providers: [IframeService]
+  providers: [BlipService, NotificationService]
 })
 export class IndividualBroadModule {}

@@ -8,7 +8,6 @@ import { filter, map, switchMap } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger, I18nService, untilDestroyed } from '@app/core';
 import { IframeService } from './services/iframe.service';
-import { BlipService } from './services/blip.service';
 import ResizeObserver from 'resize-observer-polyfill';
 
 const log = new Logger('App');
@@ -21,7 +20,6 @@ const log = new Logger('App');
 export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private iframeService: IframeService,
-    private blipService: BlipService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private titleService: Title,
@@ -36,11 +34,8 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     this.resizeIframe();
-    this.getApplication();
-    this.getTemplates();
 
     log.debug('init');
-
     // Setup translations
     this.i18nService.init(environment.defaultLanguage, environment.supportedLanguages);
 
@@ -71,36 +66,11 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.i18nService.destroy();
   }
-
   resizeIframe() {
     const rootDiv = document.getElementById('root');
     const documentObserver = new ResizeObserver(() => {
       this.iframeService.setHeight(rootDiv.scrollHeight);
     });
     documentObserver.observe(rootDiv);
-  }
-
-  async getTemplates() {
-    await this.blipService.getTemplates().then(
-      res => {
-        console.log(res);
-      },
-      error => {
-        console.log(error);
-        console.log('deu erro');
-      }
-    );
-  }
-
-  async getApplication() {
-    await this.blipService.getApplication().then(
-      res => {
-        console.log(res);
-      },
-      error => {
-        console.log(error);
-        console.log('deu erro');
-      }
-    );
   }
 }

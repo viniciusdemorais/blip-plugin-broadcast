@@ -12,14 +12,14 @@ export class BlipService {
   }
 
   async getApplication() {
-    var application = await IframeMessageProxy.sendMessage({
+    const application = await IframeMessageProxy.sendMessage({
       action: 'getApplication'
     });
     return application;
   }
 
   async getTemplates() {
-    var templates = await IframeMessageProxy.sendMessage({
+    const templates = await IframeMessageProxy.sendMessage({
       action: 'sendCommand',
       content: {
         destination: 'MessagingHubService',
@@ -30,7 +30,6 @@ export class BlipService {
         }
       }
     });
-    debugger;
     return templates;
   }
 }
