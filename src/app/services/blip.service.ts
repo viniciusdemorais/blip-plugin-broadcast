@@ -32,4 +32,36 @@ export class BlipService {
     });
     return templates;
   }
+
+  async storeBucket(variable: any, resources: {}) {
+    const bucket = await IframeMessageProxy.sendMessage({
+      action: 'sendCommand',
+      content: {
+        destination: 'MessagingHubService',
+        command: {
+          method: 'set',
+          uri: '/buckets/' + variable,
+          type: 'application/x-my-type+json',
+          resource: resources
+        }
+      }
+    });
+
+    return bucket;
+  }
+
+  async getBucket(variable: any) {
+    const bucket = await IframeMessageProxy.sendMessage({
+      action: 'sendCommand',
+      content: {
+        destination: 'MessagingHubService',
+        command: {
+          method: 'get',
+          uri: '/buckets/' + variable
+        }
+      }
+    });
+
+    return bucket;
+  }
 }
