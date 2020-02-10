@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import {
+  MatTabsModule,
   MatCardModule,
   MatSidenavModule,
   MatListModule,
@@ -25,6 +26,7 @@ import {
 } from '@angular/material';
 
 const modules = [
+  MatTabsModule,
   MatCardModule,
   MatSidenavModule,
   MatListModule,

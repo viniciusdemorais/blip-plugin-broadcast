@@ -7,10 +7,11 @@ import { SharedModule } from '@app/shared';
 import { MaterialModule } from '@app/shared/material/material-components.module';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IndividualBroadRoutingModule } from './individual-broad-routing.module';
-import { IndividualBroadComponent } from './individual-broad.component';
+import { BroadRoutingModule } from './broad-routing.module';
+import { BroadComponent } from './broad.component';
 import { BlipService } from '@app/services/blip.service';
 import { NotificationService } from '@app/services/notification.service';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 
 @NgModule({
   imports: [
@@ -21,9 +22,10 @@ import { NotificationService } from '@app/services/notification.service';
     CoreModule,
     SharedModule,
     MaterialModule,
-    IndividualBroadRoutingModule
+    MaterialFileInputModule,
+    BroadRoutingModule
   ],
-  declarations: [IndividualBroadComponent],
+  declarations: [BroadComponent],
   providers: [BlipService, NotificationService]
 })
-export class IndividualBroadModule {}
+export class BroadModule {}

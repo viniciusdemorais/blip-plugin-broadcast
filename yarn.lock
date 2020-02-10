@@ -6731,6 +6731,13 @@ neo-async@^2.5.0, neo-async@^2.6.0, neo-async@^2.6.1:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
 
+ngx-material-file-input@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-material-file-input/-/ngx-material-file-input-2.0.0.tgz#ae94d9e79193015258ff1edb101b04c0b85a26da"
+  integrity sha512-E8JyFbAZRzCNC96lbkzg+LS4xmcfoZ3Mh4jhuWfAeBngMLlLxdMW2dgZSu8MFO9V2ZQytb1DPjgmvGhJo5TJHg==
+  dependencies:
+    tslib "^1.9.0"
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"

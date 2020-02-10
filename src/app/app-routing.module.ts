@@ -6,7 +6,7 @@ const routes: Routes = [
   Shell.childRoutes([
     {
       path: '',
-      loadChildren: () => import('./pages/individual-broad/individual-broad.module').then(m => m.IndividualBroadModule)
+      loadChildren: () => import('./pages/broad/broad.module').then(m => m.BroadModule)
     }
   ])
 ];

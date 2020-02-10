@@ -5,22 +5,25 @@ import { NotificationService } from '@app/services/notification.service';
 import { NotificationIndividual } from '@app/models/NotificationIndividual';
 import { finalize } from 'rxjs/operators';
 import { untilDestroyed } from '@app/core';
+import { NotificationCsv } from '@app/models/NotificationCsv';
 
 @Component({
-  selector: 'app-individual-broad',
-  templateUrl: './individual-broad.component.html',
-  styleUrls: ['./individual-broad.component.scss']
+  selector: 'app-broad',
+  templateUrl: './broad.component.html',
+  styleUrls: ['./broad.component.scss']
 })
-export class IndividualBroadComponent implements OnInit, OnDestroy {
+export class BroadComponent implements OnInit, OnDestroy {
   unsub = new Subject();
   phoneNumber: string;
   email: string;
   namespace: string;
+  phoneColumn: string;
   loading = false;
   showTemplate = false;
   templates: any[];
   template: any;
   botId: any;
+  csvFile: File;
   accessKey: any;
   templateDescription: any;
   selectedItem: any;
@@ -101,6 +104,10 @@ export class IndividualBroadComponent implements OnInit, OnDestroy {
     return variableValues;
   }
 
+  fileInput(event: any) {
+    this.csvFile = event.target.files[0];
+  }
+
   sendNotification() {
     this.loading = true;
     const notificationObj: NotificationIndividual = {
@@ -114,6 +121,34 @@ export class IndividualBroadComponent implements OnInit, OnDestroy {
     };
     this.notificationService
       .sendIndividualNotification(notificationObj, this.botId, this.accessKey)
+      .pipe(
+        untilDestroyed(this),
+        finalize(() => {
+          this.loading = false;
+        })
+      )
+      .subscribe(
+        res => {
+          console.log('Funciona de mais');
+        },
+        error => {
+          console.log('Deu Ruim');
+        }
+      );
+  }
+
+  sendCsvNotification() {
+    this.loading = true;
+    const notificationObj: NotificationCsv = {
+      phoneColumn: this.phoneColumn,
+      senderEmail: this.email,
+      template: this.template.name,
+      languageCode: this.template.language,
+      wabanamespace: this.namespace,
+      formFile: this.csvFile
+    };
+    this.notificationService
+      .sendCsvNotification(notificationObj, this.botId, this.accessKey)
       .pipe(
         untilDestroyed(this),
         finalize(() => {
