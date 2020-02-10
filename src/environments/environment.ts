@@ -14,7 +14,7 @@ export const environment = {
   production: false,
   hmr: true,
   version: env.npm_package_version + '-dev',
-  serverUrl: 'https://c6ee69ee.ngrok.io/api/v1/',
+  serverUrl: 'https://ac5c1f15.ngrok.io/api/v1/',
   defaultLanguage: 'en-US',
   supportedLanguages: ['en-US', 'fr-FR']
 };

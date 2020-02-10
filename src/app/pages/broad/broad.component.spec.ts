@@ -3,21 +3,21 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
-import { IndividualBroadComponent } from './individual-broad.component';
+import { BroadComponent } from './broad.component';
 
-describe('IndividualBroadComponent', () => {
-  let component: IndividualBroadComponent;
-  let fixture: ComponentFixture<IndividualBroadComponent>;
+describe('BroadComponent', () => {
+  let component: BroadComponent;
+  let fixture: ComponentFixture<BroadComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [CoreModule, SharedModule, HttpClientTestingModule],
-      declarations: [IndividualBroadComponent]
+      declarations: [BroadComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IndividualBroadComponent);
+    fixture = TestBed.createComponent(BroadComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
