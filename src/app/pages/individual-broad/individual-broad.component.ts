@@ -14,6 +14,9 @@ import { untilDestroyed } from '@app/core';
 export class IndividualBroadComponent implements OnInit, OnDestroy {
   unsub = new Subject();
   phoneNumber: string;
+  masterState: string;
+  flowId: string;
+  stateId: string;
   email: string;
   namespace: string;
   loading = false;
@@ -78,6 +81,7 @@ export class IndividualBroadComponent implements OnInit, OnDestroy {
     this.templateVariables = [];
     this.template = this.templates.find(t => t.id == event.value);
     this.templateDescription = this.template.components.find((td: any) => td.type == 'BODY').text;
+
     const variables = this.templateDescription.match(/{{[0-9]*}}/gm) || [];
     variables.forEach((item: any) => {
       if (this.templateVariables.indexOf(item) == -1) {
@@ -101,12 +105,27 @@ export class IndividualBroadComponent implements OnInit, OnDestroy {
     return variableValues;
   }
 
-  sendNotification() {
+  async sendNotification() {
     this.loading = true;
+
+    var resources = {
+      masterState: this.masterState,
+      flowId: this.flowId,
+      stateId: this.stateId,
+      templateId: this.template.name,
+      namespace: this.namespace
+    };
+
+    await this.blipService.storeBucket(this.template.name, resources);
+    await this.blipService.getBucket(this.template.name);
+
     const notificationObj: NotificationIndividual = {
       telephone: this.phoneNumber,
       template: this.template.name,
       language_code: this.template.language,
+      master_state: this.template.language,
+      flow_id: this.template.language,
+      state_id: this.template.language,
       namespace: this.namespace,
       params: this.variableValues(this.templateVariables),
       sender_email: this.email,
