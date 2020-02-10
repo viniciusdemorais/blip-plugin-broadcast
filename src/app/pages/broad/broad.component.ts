@@ -112,11 +112,10 @@ export class BroadComponent implements OnInit, OnDestroy {
     this.csvFile = event.target.files[0];
   }
 
-  sendNotification() {
   async sendNotification() {
     this.loading = true;
 
-    var resources = {
+    const resources = {
       masterState: this.masterState,
       flowId: this.flowId,
       stateId: this.stateId,
