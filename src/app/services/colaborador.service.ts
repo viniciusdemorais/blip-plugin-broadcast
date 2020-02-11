@@ -21,7 +21,9 @@ export class ColaboradorService {
   }
 
   saveColaborador(data: Colaborador): Observable<any> {
-    return this.http.request<any>('post', `Colaborador`, { body: data }).pipe(map(resp => resp));
+    return this.http
+      .request<any>('post', `Colaborador`, { body: data })
+      .pipe(map(resp => resp));
   }
 
   deleteColaborador(id: number): Observable<any> {

@@ -63,6 +63,9 @@ export const MY_FORMATS = {
   imports: [modules],
   exports: [modules],
   declarations: [],
-  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }, { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }]
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
+  ]
 })
 export class MaterialModule {}
