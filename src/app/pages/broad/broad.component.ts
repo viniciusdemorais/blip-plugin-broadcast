@@ -99,6 +99,12 @@ export class BroadComponent implements OnInit, OnDestroy {
     this.showTemplate = true;
   }
 
+  selectedTemplateBucket(event: any) {
+    this.templateVariables = [];
+    this.template = this.templates.find(t => t.id == event.value);
+    this.templateDescription = this.template.components.find((td: any) => td.type == 'BODY').text;
+  }
+
   variableId(text: any): string {
     return 'var' + text.replace(/{*}*/g, '');
   }
