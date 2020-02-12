@@ -6,6 +6,7 @@ import { untilDestroyed } from '@app/core';
 import { NotificationCsv } from '@app/models/NotificationCsv';
 import { ConfigurationService } from '@app/services/configuration.service';
 import { BucketVariables } from '@app/models/BucketVariables';
+import { IframeService } from '@app/services/iframe.service';
 
 @Component({
   selector: 'app-broad-sheet',
@@ -30,7 +31,11 @@ export class SheetComponent implements OnInit, OnDestroy {
   templateDescription: any;
   templateVariables: any[] = [];
 
-  constructor(private configurationService: ConfigurationService, private notificationService: NotificationService) {}
+  constructor(
+    private iframeService: IframeService,
+    private configurationService: ConfigurationService,
+    private notificationService: NotificationService
+  ) {}
 
   ngOnInit() {}
 
@@ -71,8 +76,10 @@ export class SheetComponent implements OnInit, OnDestroy {
     this.csvFile = event.target.files[0];
   }
 
-  sendCsvNotification() {
+  async sendCsvNotification() {
+    debugger;
     this.loadingStatus.emit(true);
+    await this.getConfigurations(this.template.name);
     const notificationObj: NotificationCsv = {
       phoneColumn: this.phoneColumn,
       senderEmail: this.email,
@@ -94,10 +101,16 @@ export class SheetComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         res => {
-          console.log('Funciona de mais');
+          this.iframeService.showToast({
+            type: 'success',
+            message: 'Notificação enviada com sucesso!'
+          });
         },
         error => {
-          console.log('Deu Ruim');
+          this.iframeService.showToast({
+            type: 'danger',
+            message: 'Falha ao enviar notificação!'
+          });
         }
       );
   }

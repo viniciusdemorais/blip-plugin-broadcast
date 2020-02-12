@@ -31,10 +31,6 @@
     </mat-form-field>
   </div>
   <div class="row mt-3" *ngIf="showTemplate">
-    <mat-form-field class="col-md-2" *ngFor="let variable of templateVariables">
-      <mat-label>Variável {{ variable }}</mat-label>
-      <input id="{{ variableId(variable) }}" matInput placeholder="{{ variable }}" />
-    </mat-form-field>
     <div class="col-md-12">
       <div class="template-card">
         <div class="sub-title">
