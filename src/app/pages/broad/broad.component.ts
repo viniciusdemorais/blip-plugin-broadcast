@@ -1,6 +1,7 @@
 import { OnInit, OnDestroy, Component } from '@angular/core';
 import { Subject } from 'rxjs';
 import { BlipService } from '@app/services/blip.service';
+import { ConfigurationService } from '@app/services/configuration.service';
 import { NotificationService } from '@app/services/notification.service';
 import { NotificationIndividual } from '@app/models/NotificationIndividual';
 import { finalize } from 'rxjs/operators';
@@ -32,7 +33,11 @@ export class BroadComponent implements OnInit, OnDestroy {
   selectedItem: any;
   templateVariables: any[] = [];
 
-  constructor(private blipService: BlipService, private notificationService: NotificationService) {}
+  constructor(
+    private blipService: BlipService,
+    private configurationService: ConfigurationService,
+    private notificationService: NotificationService
+  ) {}
 
   ngOnInit() {
     this.getTemplates();
@@ -94,6 +99,12 @@ export class BroadComponent implements OnInit, OnDestroy {
     this.showTemplate = true;
   }
 
+  selectedTemplateBucket(event: any) {
+    this.templateVariables = [];
+    this.template = this.templates.find(t => t.id == event.value);
+    this.templateDescription = this.template.components.find((td: any) => td.type == 'BODY').text;
+  }
+
   variableId(text: any): string {
     return 'var' + text.replace(/{*}*/g, '');
   }
@@ -115,16 +126,7 @@ export class BroadComponent implements OnInit, OnDestroy {
   async sendNotification() {
     this.loading = true;
 
-    const resources = {
-      masterState: this.masterState,
-      flowId: this.flowId,
-      stateId: this.stateId,
-      templateId: this.template.name,
-      namespace: this.namespace
-    };
-
-    await this.blipService.storeBucket(this.template.name, resources);
-    await this.blipService.getBucket(this.template.name);
+    const bucket = await this.getConfigurations(this.template.name);
 
     const notificationObj: NotificationIndividual = {
       telephone: this.phoneNumber,
@@ -182,5 +184,24 @@ export class BroadComponent implements OnInit, OnDestroy {
           console.log('Deu Ruim');
         }
       );
+  }
+
+  async saveConfigurations() {
+    const resources = {
+      masterState: this.masterState,
+      flowId: this.flowId,
+      stateId: this.stateId,
+      namespace: this.namespace
+    };
+
+    const bucket = await this.configurationService.storeBucket(this.template.name, resources);
+
+    return bucket;
+  }
+
+  async getConfigurations(variable: any) {
+    const bucket = await this.configurationService.getBucket(variable);
+
+    return bucket;
   }
 }
