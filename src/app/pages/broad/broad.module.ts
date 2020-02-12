@@ -12,6 +12,9 @@ import { BroadComponent } from './broad.component';
 import { BlipService } from '@app/services/blip.service';
 import { NotificationService } from '@app/services/notification.service';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { IndividualComponent } from './individual/individual.component';
+import { SheetComponent } from './sheet/sheet.component';
+import { ConfigurationComponent } from './configuration/configuration.component';
 
 @NgModule({
   imports: [
@@ -25,7 +28,7 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     MaterialFileInputModule,
     BroadRoutingModule
   ],
-  declarations: [BroadComponent],
+  declarations: [BroadComponent, IndividualComponent, SheetComponent, ConfigurationComponent],
   providers: [BlipService, NotificationService]
 })
 export class BroadModule {}

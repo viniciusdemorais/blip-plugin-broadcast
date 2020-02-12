@@ -14,157 +14,21 @@
             <mat-icon class="example-tab-icon mr-2">person</mat-icon>
             Individual
           </ng-template>
-          <mat-card-content class="m-4">
-            <div class="row mt-5">
-              <mat-form-field class="col-md-6">
-                <mat-label for="phoneNumber">Número do telefone</mat-label>
-                <input id="phoneNumber" matInput placeholder="Ex. (31) 9 9999-9999" [(ngModel)]="phoneNumber" />
-              </mat-form-field>
-              <mat-form-field class="col-md-6">
-                <mat-label for="email">Email que receberá o resultado</mat-label>
-                <input id="email" matInput placeholder="Ex. nome@email.com" [(ngModel)]="email" />
-              </mat-form-field>
-            </div>
-            <div class="row mt-3">
-              <mat-form-field class="col-md-6">
-                <mat-label for="namespace">Namespace</mat-label>
-                <input id="namespace" matInput placeholder="Ex. de0fe0f_qweq_dass" [(ngModel)]="namespace" />
-              </mat-form-field>
-              <mat-form-field class="col-md-6">
-                <mat-label>Template</mat-label>
-                <mat-select (selectionChange)="selectedTemplate($event)">
-                  <mat-option *ngFor="let template of templates" [value]="template.id">
-                    {{ template.name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="row mt-3" *ngIf="showTemplate">
-              <mat-form-field class="col-md-2" *ngFor="let variable of templateVariables">
-                <mat-label>Variável {{ variable }}</mat-label>
-                <input id="{{ variableId(variable) }}" matInput placeholder="{{ variable }}" />
-              </mat-form-field>
-              <div class="col-md-12">
-                <div class="template-card">
-                  <div class="sub-title">
-                    {{ templateDescription }}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <button class="d-flex mx-auto mt-5" mat-raised-button color="primary" (click)="sendNotification()">
-              Enviar <mat-icon class="ml-2">send</mat-icon>
-            </button>
-          </mat-card-content>
+          <app-broad-individual></app-broad-individual>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
             <mat-icon class="example-tab-icon mr-2">people</mat-icon>
             Planilha
           </ng-template>
-          <mat-card-content class="m-4">
-            <div class="row mt-5">
-              <mat-form-field class="col-md-12">
-                <ngx-mat-file-input
-                  id="csv"
-                  #removableInput
-                  placeholder="Enviar planilha..."
-                  (change)="fileInput($event)"
-                ></ngx-mat-file-input>
-                <button mat-icon-button matSuffix *ngIf="!removableInput.empty" (click)="removableInput.clear($event)">
-                  <mat-icon>clear</mat-icon>
-                </button>
-              </mat-form-field>
-              <mat-form-field class="col-md-6">
-                <mat-label for="phoneColumn">Nome da coluna de telefone na planilha</mat-label>
-                <input id="phoneColumn" matInput placeholder="Ex. telefone" [(ngModel)]="phoneColumn" />
-              </mat-form-field>
-              <mat-form-field class="col-md-6">
-                <mat-label for="email">Email que receberá o resultado</mat-label>
-                <input id="email" matInput placeholder="Ex. nome@email.com" [(ngModel)]="email" />
-              </mat-form-field>
-            </div>
-            <div class="row mt-3">
-              <mat-form-field class="col-md-6">
-                <mat-label for="namespace">Namespace</mat-label>
-                <input id="namespace" matInput placeholder="Ex. de0fe0f_qweq_dass" [(ngModel)]="namespace" />
-              </mat-form-field>
-              <mat-form-field class="col-md-6">
-                <mat-label>Template</mat-label>
-                <mat-select (selectionChange)="selectedTemplate($event)">
-                  <mat-option *ngFor="let template of templates" [value]="template.id">
-                    {{ template.name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="row mt-3" *ngIf="showTemplate">
-              <mat-form-field class="col-md-2" *ngFor="let variable of templateVariables">
-                <mat-label>Variável {{ variable }}</mat-label>
-                <input id="{{ variableId(variable) }}" matInput placeholder="{{ variable }}" />
-              </mat-form-field>
-              <div class="col-md-12">
-                <div class="template-card">
-                  <div class="sub-title">
-                    {{ templateDescription }}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <button class="d-flex mx-auto mt-5" mat-raised-button color="primary" (click)="sendCsvNotification()">
-              Enviar Planilha<mat-icon class="ml-2">send</mat-icon>
-            </button>
-          </mat-card-content>
+          <app-broad-sheet></app-broad-sheet>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
-            <mat-icon class="example-tab-icon mr-2">people</mat-icon>
+            <mat-icon class="example-tab-icon mr-2">build</mat-icon>
             Configure seus templates
           </ng-template>
-          <mat-card-content class="m-4">
-            <div class="row mt-5">
-              <mat-form-field class="col-md-4">
-                <mat-label for="phoneColumn">Namespace</mat-label>
-                <input id="phoneColumn" matInput placeholder="Ex. de0fe0f_qweq_dass" [(ngModel)]="namespace" />
-              </mat-form-field>
-              <mat-form-field class="col-md-4">
-                <mat-label for="email">Master State</mat-label>
-                <input id="email" matInput placeholder="Apenas apenas para bots roteadores" [(ngModel)]="masterState" />
-              </mat-form-field>
-              <mat-form-field class="col-md-4">
-                <mat-label for="namespace">Flow ID</mat-label>
-                <input id="namespace" matInput placeholder="Identificador do fluxo" [(ngModel)]="flowId" />
-              </mat-form-field>
-            </div>
-            <div class="row mt-3">
-              <mat-form-field class="col-md-6">
-                <mat-label for="stateId">State ID</mat-label>
-                <input
-                  id="stateId"
-                  matInput
-                  placeholder="Id da caixa que você deseja redirecionar"
-                  [(ngModel)]="stateId"
-                />
-              </mat-form-field>
-              <mat-form-field class="col-md-6">
-                <mat-label>Template</mat-label>
-                <mat-select (selectionChange)="selectedTemplateBucket($event)">
-                  <mat-option *ngFor="let template of templates" [value]="template.id">
-                    {{ template.name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="row mt-3" *ngIf="showTemplate">
-              <mat-form-field class="col-md-2" *ngFor="let variable of templateVariables">
-                <mat-label>Variável {{ variable }}</mat-label>
-                <input id="{{ variableId(variable) }}" matInput placeholder="{{ variable }}" />
-              </mat-form-field>
-            </div>
-            <button class="d-flex mx-auto mt-5" mat-raised-button color="primary" (click)="saveConfigurations()">
-              Salvar configurações<mat-icon class="ml-2">send</mat-icon>
-            </button>
-          </mat-card-content>
+          <app-broad-configuration></app-broad-configuration>
         </mat-tab>
       </mat-tab-group>
     </mat-card>
