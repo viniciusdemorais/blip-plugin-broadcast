@@ -6,6 +6,7 @@ import { NotificationIndividual } from '@app/models/NotificationIndividual';
 import { finalize } from 'rxjs/operators';
 import { untilDestroyed } from '@app/core';
 import { BucketVariables } from '@app/models/BucketVariables';
+import { IframeService } from '@app/services/iframe.service';
 
 @Component({
   selector: 'app-broad-individual',
@@ -29,7 +30,11 @@ export class IndividualComponent implements OnInit, OnDestroy {
   templateVariables: any[] = [];
   bucketTemplate: BucketVariables;
 
-  constructor(private configurationService: ConfigurationService, private notificationService: NotificationService) {}
+  constructor(
+    private iframeService: IframeService,
+    private configurationService: ConfigurationService,
+    private notificationService: NotificationService
+  ) {}
 
   ngOnInit() {}
 
@@ -90,10 +95,16 @@ export class IndividualComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         res => {
-          console.log('Funciona de mais');
+          this.iframeService.showToast({
+            type: 'success',
+            message: 'Notificação enviada com sucesso!'
+          });
         },
         error => {
-          console.log('Deu Ruim');
+          this.iframeService.showToast({
+            type: 'danger',
+            message: 'Falha ao enviar notificação!'
+          });
         }
       );
   }

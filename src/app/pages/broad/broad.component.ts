@@ -87,6 +87,7 @@ export class BroadComponent implements OnInit, OnDestroy {
   }
 
   changeLoading(event: boolean) {
+    debugger;
     this.loading = event;
   }
 }
