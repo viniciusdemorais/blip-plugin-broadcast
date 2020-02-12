@@ -1,11 +1,11 @@
-import { OnInit, OnDestroy, Component } from '@angular/core';
+import { OnInit, OnDestroy, Component, Input, Output, EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs';
-import { BlipService } from '@app/services/blip.service';
-import { ConfigurationService } from '@app/services/configuration.service';
 import { NotificationService } from '@app/services/notification.service';
 import { finalize } from 'rxjs/operators';
 import { untilDestroyed } from '@app/core';
 import { NotificationCsv } from '@app/models/NotificationCsv';
+import { ConfigurationService } from '@app/services/configuration.service';
+import { BucketVariables } from '@app/models/BucketVariables';
 
 @Component({
   selector: 'app-broad-sheet',
@@ -13,72 +13,30 @@ import { NotificationCsv } from '@app/models/NotificationCsv';
   styleUrls: ['./sheet.component.scss']
 })
 export class SheetComponent implements OnInit, OnDestroy {
+  @Input() templates: any[];
+  @Input() botId: any;
+  @Input() accessKey: any;
+  @Output() loadingStatus = new EventEmitter<boolean>();
   unsub = new Subject();
-  loading = false;
+
   showTemplate = false;
 
   email: string;
-  namespace: string;
   phoneColumn: string;
 
-  templates: any[];
+  bucketTemplate: BucketVariables;
   template: any;
-  botId: any;
   csvFile: File;
-  accessKey: any;
   templateDescription: any;
   templateVariables: any[] = [];
 
-  constructor(
-    private blipService: BlipService,
-    private configurationService: ConfigurationService,
-    private notificationService: NotificationService
-  ) {}
+  constructor(private configurationService: ConfigurationService, private notificationService: NotificationService) {}
 
-  ngOnInit() {
-    this.getTemplates();
-    this.getApplications();
-  }
+  ngOnInit() {}
 
   ngOnDestroy() {
     this.unsub.next();
     this.unsub.unsubscribe();
-  }
-
-  async getApplications() {
-    this.loading = true;
-    await this.blipService
-      .getApplication()
-      .then(
-        res => {
-          this.botId = res.response.shortName;
-          this.accessKey = res.response.accessKey;
-        },
-        error => {
-          console.log(error);
-        }
-      )
-      .finally(() => {
-        this.loading = false;
-      });
-  }
-
-  async getTemplates() {
-    this.loading = true;
-    await this.blipService
-      .getTemplates()
-      .then(
-        res => {
-          console.log(res);
-          this.templates = res.response.data;
-        },
-        error => {
-          console.log(error);
-        }
-      )
-      .finally(() => {
-        this.loading = false;
-      });
   }
 
   selectedTemplate(event: any) {
@@ -114,13 +72,16 @@ export class SheetComponent implements OnInit, OnDestroy {
   }
 
   sendCsvNotification() {
-    this.loading = true;
+    this.loadingStatus.emit(true);
     const notificationObj: NotificationCsv = {
       phoneColumn: this.phoneColumn,
       senderEmail: this.email,
       template: this.template.name,
       languageCode: this.template.language,
-      wabanamespace: this.namespace,
+      wabanamespace: this.bucketTemplate.namespace,
+      masterState: this.bucketTemplate.masterState,
+      flowId: this.bucketTemplate.flowId,
+      stateId: this.bucketTemplate.stateId,
       formFile: this.csvFile
     };
     this.notificationService
@@ -128,7 +89,7 @@ export class SheetComponent implements OnInit, OnDestroy {
       .pipe(
         untilDestroyed(this),
         finalize(() => {
-          this.loading = false;
+          this.loadingStatus.emit(false);
         })
       )
       .subscribe(
@@ -139,5 +100,16 @@ export class SheetComponent implements OnInit, OnDestroy {
           console.log('Deu Ruim');
         }
       );
+  }
+
+  async getConfigurations(variable: any) {
+    await this.configurationService.getBucket(variable).then(
+      res => {
+        this.bucketTemplate = res;
+      },
+      error => {
+        this.bucketTemplate = {};
+      }
+    );
   }
 }

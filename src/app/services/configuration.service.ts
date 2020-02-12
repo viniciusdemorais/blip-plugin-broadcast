@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { BucketVariables } from '@app/models/BucketVariables';
+import { Observable } from 'rxjs';
 
 const { IframeMessageProxy } = require('iframe-message-proxy');
 
@@ -39,7 +41,6 @@ export class ConfigurationService {
         }
       }
     });
-
-    return bucket;
+    return bucket.response as BucketVariables;
   }
 }

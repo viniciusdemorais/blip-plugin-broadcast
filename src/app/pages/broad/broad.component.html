@@ -14,21 +14,21 @@
             <mat-icon class="example-tab-icon mr-2">person</mat-icon>
             Individual
           </ng-template>
-          <app-broad-individual></app-broad-individual>
+          <app-broad-individual [templates]="templates" [botId]="botId" [accessKey]="accessKey"></app-broad-individual>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
             <mat-icon class="example-tab-icon mr-2">people</mat-icon>
             Planilha
           </ng-template>
-          <app-broad-sheet></app-broad-sheet>
+          <app-broad-sheet [templates]="templates" [botId]="botId" [accessKey]="accessKey"></app-broad-sheet>
         </mat-tab>
-        <mat-tab>
+        <mat-tab *ngIf="showConfigurations">
           <ng-template mat-tab-label>
             <mat-icon class="example-tab-icon mr-2">build</mat-icon>
             Configure seus templates
           </ng-template>
-          <app-broad-configuration></app-broad-configuration>
+          <app-broad-configuration [templates]="templates"></app-broad-configuration>
         </mat-tab>
       </mat-tab-group>
     </mat-card>
