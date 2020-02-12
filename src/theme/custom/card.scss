@@ -1,0 +1,14 @@
+.card {
+  background-color: #fff;
+  border-radius: 2px;
+  transition: box-shadow 0.15s ease-in-out, transform 0.15s ease-in-out;
+  -ms-box-shadow: 0 2px 12px 0 #e1e7ee;
+  -o-box-shadow: 0 2px 12px 0 #e1e7ee;
+  box-shadow: 0 2px 12px 0 #e1e7ee;
+}
+
+.template-card {
+  border-radius: 8px;
+  padding: 8px;
+  border: solid 1px #52636c;
+}

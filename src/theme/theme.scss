@@ -2,8 +2,11 @@
  * Global application theme.
  * Framework overrides and customization goes here.
  */
-@import "btn/custom-btn.scss";
-@import "./size.scss";
-@import "table/custom-table.scss";
+@import "./custom/custom-btn.scss";
+@import "./custom/card.scss";
+@import "./custom/typing.scss";
+@import "./custom/size.scss";
+@import "./custom/custom-table.scss";
+@import "./custom/material-custom.scss";
+
 @import "./layout.scss";
-@import "./material-custom.scss";
