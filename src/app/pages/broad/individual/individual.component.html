@@ -10,11 +10,7 @@
     </mat-form-field>
   </div>
   <div class="row mt-3">
-    <mat-form-field class="col-md-6">
-      <mat-label for="namespace">Namespace</mat-label>
-      <input id="namespace" matInput placeholder="Ex. de0fe0f_qweq_dass" [(ngModel)]="namespace" />
-    </mat-form-field>
-    <mat-form-field class="col-md-6">
+    <mat-form-field class="col-md-12">
       <mat-label>Template</mat-label>
       <mat-select (selectionChange)="selectedTemplate($event)">
         <mat-option *ngFor="let template of templates" [value]="template.id">

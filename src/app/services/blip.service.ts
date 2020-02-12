@@ -32,4 +32,18 @@ export class BlipService {
     });
     return templates;
   }
+
+  async getAccount() {
+    const account = await IframeMessageProxy.sendMessage({
+      action: 'sendCommand',
+      content: {
+        destination: 'BlipService',
+        command: {
+          method: 'get',
+          uri: '/account'
+        }
+      }
+    });
+    return account;
+  }
 }
