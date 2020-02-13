@@ -39,6 +39,9 @@ affinity: {}
 environment:
     stage: staging
 
+appSettings:
+    configMap: blip-plugin-broadcast
+
 autoscale:
     minReplicas: 1
     maxReplicas: 3

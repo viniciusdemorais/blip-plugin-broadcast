@@ -1,5 +1,7 @@
 affinity: {}
 annotations: {}
+appSettings:
+    configMap: blip-plugin-broadcast-staging
 autoscale:
   averageCPUUtilization: 60
   maxReplicas: 2
