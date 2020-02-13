@@ -41,12 +41,14 @@ environment:
 
 appSettings:
     configMap: blip-plugin-broadcast
+    path: /app/src/config/default.json
+    subPath: default.json
 
 autoscale:
     minReplicas: 1
     maxReplicas: 3
     averageCPUUtilization: 80
 
-team: delta
+team: lima
 
 annotations: {}

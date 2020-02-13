@@ -2,6 +2,8 @@ affinity: {}
 annotations: {}
 appSettings:
     configMap: blip-plugin-broadcast-staging
+    path: /app/src/config/default.json
+    subPath: default.json
 autoscale:
   averageCPUUtilization: 60
   maxReplicas: 2
