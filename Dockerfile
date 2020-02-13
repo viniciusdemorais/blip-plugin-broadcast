@@ -1,12 +1,18 @@
 FROM node:10-alpine as buildContainer
 
-COPY . /app
-WORKDIR /app
-RUN npm install
-RUN npm run build:prod
+RUN ["mkdir", "/app"]
 
-FROM nginx:alpine
-COPY --from=buildContainer /app/dist /app
-COPY --from=buildContainer /app/nginx.conf /etc/nginx/nginx.conf
+WORKDIR /app
+
+COPY package.json /app
+
+RUN ["npm", "install"]
+
+COPY . .
+
+RUN ["npm", "run", "build"]
+
+FROM nginx:1.17.1-alpine
+COPY --from=buildContainer /app/dist /usr/share/nginx/html
 
 EXPOSE 80
