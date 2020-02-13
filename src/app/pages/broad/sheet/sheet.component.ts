@@ -89,7 +89,8 @@ export class SheetComponent implements OnInit, OnDestroy {
       masterState: this.bucketTemplate.masterState,
       flowId: this.bucketTemplate.flowId,
       stateId: this.bucketTemplate.stateId,
-      formFile: this.csvFile
+      formFile: this.csvFile,
+      scheduleTime: '0'
     };
     this.notificationService
       .sendCsvNotification(notificationObj, this.botId, this.accessKey)

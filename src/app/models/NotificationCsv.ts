@@ -8,4 +8,5 @@ export interface NotificationCsv {
   masterState?: string;
   senderEmail?: string;
   languageCode?: string;
+  scheduleTime?: string;
 }
