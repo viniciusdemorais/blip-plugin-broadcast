@@ -1,6 +1,7 @@
 import { OnInit, OnDestroy, Component } from '@angular/core';
 import { Subject } from 'rxjs';
 import { BlipService } from '@app/services/blip.service';
+import { LoadingService } from '@app/services/loading.service';
 @Component({
   selector: 'app-broad',
   templateUrl: './broad.component.html',
@@ -8,8 +9,6 @@ import { BlipService } from '@app/services/blip.service';
 })
 export class BroadComponent implements OnInit, OnDestroy {
   unsub = new Subject();
-
-  loading = false;
   showConfigurations = false;
   takeDomain = '@take.net';
 
@@ -17,7 +16,7 @@ export class BroadComponent implements OnInit, OnDestroy {
   botId: any;
   accessKey: any;
 
-  constructor(private blipService: BlipService) {}
+  constructor(private blipService: BlipService, private loadingService: LoadingService) {}
 
   ngOnInit() {
     this.getTemplates();
@@ -31,7 +30,7 @@ export class BroadComponent implements OnInit, OnDestroy {
   }
 
   async getAccount() {
-    this.loading = true;
+    this.loadingService.showLoad();
     await this.blipService
       .getAccount()
       .then(
@@ -46,12 +45,12 @@ export class BroadComponent implements OnInit, OnDestroy {
         }
       )
       .finally(() => {
-        this.loading = false;
+        this.loadingService.hiddeLoad();
       });
   }
 
   async getApplications() {
-    this.loading = true;
+    this.loadingService.showLoad();
     await this.blipService
       .getApplication()
       .then(
@@ -64,12 +63,12 @@ export class BroadComponent implements OnInit, OnDestroy {
         }
       )
       .finally(() => {
-        this.loading = false;
+        this.loadingService.hiddeLoad();
       });
   }
 
   async getTemplates() {
-    this.loading = true;
+    this.loadingService.showLoad();
     await this.blipService
       .getTemplates()
       .then(
@@ -82,12 +81,7 @@ export class BroadComponent implements OnInit, OnDestroy {
         }
       )
       .finally(() => {
-        this.loading = false;
+        this.loadingService.hiddeLoad();
       });
-  }
-
-  changeLoading(event: boolean) {
-    debugger;
-    this.loading = event;
   }
 }

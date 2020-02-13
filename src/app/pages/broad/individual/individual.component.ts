@@ -7,6 +7,7 @@ import { finalize } from 'rxjs/operators';
 import { untilDestroyed } from '@app/core';
 import { BucketVariables } from '@app/models/BucketVariables';
 import { IframeService } from '@app/services/iframe.service';
+import { LoadingService } from '@app/services/loading.service';
 
 @Component({
   selector: 'app-broad-individual',
@@ -17,7 +18,6 @@ export class IndividualComponent implements OnInit, OnDestroy {
   @Input() templates: any[];
   @Input() botId: any;
   @Input() accessKey: any;
-  @Output() loadingStatus = new EventEmitter<boolean>();
   unsub = new Subject();
 
   showTemplate = false;
@@ -31,6 +31,7 @@ export class IndividualComponent implements OnInit, OnDestroy {
   bucketTemplate: BucketVariables;
 
   constructor(
+    private loadingService: LoadingService,
     private iframeService: IframeService,
     private configurationService: ConfigurationService,
     private notificationService: NotificationService
@@ -71,7 +72,7 @@ export class IndividualComponent implements OnInit, OnDestroy {
   }
 
   async sendNotification() {
-    this.loadingStatus.emit(true);
+    this.loadingService.showLoad();
     await this.getConfigurations(this.template.name);
     const notificationObj: NotificationIndividual = {
       telephone: this.phoneNumber,
@@ -90,7 +91,7 @@ export class IndividualComponent implements OnInit, OnDestroy {
       .pipe(
         untilDestroyed(this),
         finalize(() => {
-          this.loadingStatus.emit(false);
+          this.loadingService.hiddeLoad();
         })
       )
       .subscribe(
