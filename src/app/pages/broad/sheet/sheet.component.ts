@@ -7,6 +7,7 @@ import { NotificationCsv } from '@app/models/NotificationCsv';
 import { ConfigurationService } from '@app/services/configuration.service';
 import { BucketVariables } from '@app/models/BucketVariables';
 import { IframeService } from '@app/services/iframe.service';
+import { LoadingService } from '@app/services/loading.service';
 
 @Component({
   selector: 'app-broad-sheet',
@@ -17,7 +18,6 @@ export class SheetComponent implements OnInit, OnDestroy {
   @Input() templates: any[];
   @Input() botId: any;
   @Input() accessKey: any;
-  @Output() loadingStatus = new EventEmitter<boolean>();
   unsub = new Subject();
 
   showTemplate = false;
@@ -32,6 +32,7 @@ export class SheetComponent implements OnInit, OnDestroy {
   templateVariables: any[] = [];
 
   constructor(
+    private loadingService: LoadingService,
     private iframeService: IframeService,
     private configurationService: ConfigurationService,
     private notificationService: NotificationService
@@ -77,8 +78,7 @@ export class SheetComponent implements OnInit, OnDestroy {
   }
 
   async sendCsvNotification() {
-    debugger;
-    this.loadingStatus.emit(true);
+    this.loadingService.showLoad();
     await this.getConfigurations(this.template.name);
     const notificationObj: NotificationCsv = {
       phoneColumn: this.phoneColumn,
@@ -96,7 +96,7 @@ export class SheetComponent implements OnInit, OnDestroy {
       .pipe(
         untilDestroyed(this),
         finalize(() => {
-          this.loadingStatus.emit(false);
+          this.loadingService.hiddeLoad();
         })
       )
       .subscribe(

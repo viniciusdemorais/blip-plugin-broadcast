@@ -2,6 +2,7 @@ import { OnInit, OnDestroy, Component, Input, Output, EventEmitter } from '@angu
 import { Subject } from 'rxjs';
 import { ConfigurationService } from '@app/services/configuration.service';
 import { IframeService } from '@app/services/iframe.service';
+import { LoadingService } from '@app/services/loading.service';
 
 @Component({
   selector: 'app-broad-configuration',
@@ -10,7 +11,6 @@ import { IframeService } from '@app/services/iframe.service';
 })
 export class ConfigurationComponent implements OnInit, OnDestroy {
   @Input() templates: any[];
-  @Output() loadingStatus = new EventEmitter<boolean>();
 
   unsub = new Subject();
 
@@ -23,7 +23,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
   templateDescription: any;
   templateVariables: any[] = [];
 
-  constructor(private iframeService: IframeService, private configurationService: ConfigurationService) {}
+  constructor(
+    private iframeService: IframeService,
+    private configurationService: ConfigurationService,
+    private loadingService: LoadingService
+  ) {}
 
   ngOnInit() {}
 
@@ -44,7 +48,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
   }
 
   async saveConfigurations() {
-    this.loadingStatus.emit(true);
+    this.loadingService.showLoad();
     const resources = {
       masterState: this.masterState,
       flowId: this.flowId,
@@ -68,12 +72,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         }
       )
       .finally(() => {
-        this.loadingStatus.emit(false);
+        this.loadingService.hiddeLoad();
       });
   }
 
   async getConfigurations(variable: any) {
-    this.loadingStatus.emit(true);
+    this.loadingService.showLoad();
     const bucket = await this.configurationService
       .getBucket(variable)
       .then(
@@ -91,7 +95,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         }
       )
       .finally(() => {
-        this.loadingStatus.emit(false);
+        this.loadingService.hiddeLoad();
       });
     return bucket;
   }
