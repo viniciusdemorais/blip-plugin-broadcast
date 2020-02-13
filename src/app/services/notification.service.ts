@@ -32,7 +32,8 @@ export class NotificationService {
           stateId: data.stateId,
           masterState: data.masterState,
           senderEmail: data.senderEmail,
-          languageCode: data.languageCode
+          languageCode: data.languageCode,
+          scheduleTime: data.scheduleTime
         },
         body: formData
       })
