@@ -30,7 +30,13 @@ import { ConfigurationGeneralService } from '@app/services/configuration-general
     MaterialFileInputModule,
     BroadRoutingModule
   ],
-  declarations: [BroadComponent, IndividualComponent, SheetComponent, ConfigurationComponent, ConfigurationGeneralComponent],
+  declarations: [
+    BroadComponent,
+    IndividualComponent,
+    SheetComponent,
+    ConfigurationComponent,
+    ConfigurationGeneralComponent
+  ],
   providers: [BlipService, NotificationService, ConfigurationGeneralService]
 })
 export class BroadModule {}
