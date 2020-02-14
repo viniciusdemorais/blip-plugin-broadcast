@@ -11,4 +11,4 @@ PRD: yarn build
 
 Docker already configured
 
-Authors: [@viniciusdemorais]([https://github.com/viniciusdemorais](https://github.com/viniciusdemorais)) and [@eusouodaniel](https://github.com/eusouodaniel)
+Authors: [@viniciusdemorais](https://github.com/viniciusdemorais) and [@eusouodaniel](https://github.com/eusouodaniel)
