@@ -1,9 +1,14 @@
-# blip-broad-plugin
+# BLIP-PLUGIN-BROADCAST
 
-Welcome to the project documentation!
+#
+Plugin development by BLiP platform
+https://blip.ai
 
-Use `npm run docs` for easier navigation.
+# How to use
 
-## Available documentation
+Local: yarn dev
+PRD: yarn build
 
-[[index]]
+Docker already configured
+
+Authors: [@viniciusdemorais]([https://github.com/viniciusdemorais](https://github.com/viniciusdemorais)) and [@eusouodaniel](https://github.com/eusouodaniel)
