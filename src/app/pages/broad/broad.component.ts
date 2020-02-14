@@ -2,6 +2,8 @@ import { OnInit, OnDestroy, Component } from '@angular/core';
 import { Subject } from 'rxjs';
 import { BlipService } from '@app/services/blip.service';
 import { LoadingService } from '@app/services/loading.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-broad',
   templateUrl: './broad.component.html',
@@ -16,9 +18,10 @@ export class BroadComponent implements OnInit, OnDestroy {
   botId: any;
   accessKey: any;
 
-  constructor(private blipService: BlipService, private loadingService: LoadingService) {}
+  constructor(private blipService: BlipService, private loadingService: LoadingService, private router: Router) {}
 
   ngOnInit() {
+    
     this.getTemplates();
     this.getApplications();
     this.getAccount();

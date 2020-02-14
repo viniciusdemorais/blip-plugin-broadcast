@@ -33,6 +33,10 @@ export class AppComponent implements OnInit, OnDestroy {
       Logger.enableProductionMode();
     }
 
+    if (!this.checkURL()) {
+      document.location.href = 'https://blip.ai';
+    }
+
     this.resizeIframe();
 
     log.debug('init');
@@ -72,5 +76,13 @@ export class AppComponent implements OnInit, OnDestroy {
       this.iframeService.setHeight(rootDiv.scrollHeight);
     });
     documentObserver.observe(rootDiv);
+  }
+
+  checkURL() {
+    if (document.referrer.indexOf("portal.blip.ai") != -1 || document.referrer.indexOf("hmg-portal.blip.ai") != -1){
+      return true;
+    }
+
+    return false;
   }
 }
