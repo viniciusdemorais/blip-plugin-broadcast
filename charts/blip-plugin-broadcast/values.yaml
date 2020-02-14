@@ -1,0 +1,54 @@
+# Declare variables to be passed into your templates.
+fullnameOverride: blip-plugin-broadcast
+replicaCount: 1
+image:
+  repository: blip-plugin-broadcast
+  tag: #{Build.BuildId}#
+  pullPolicy: IfNotPresent
+  imagePullSecretName: acr-takeprivate-secret
+imagePullSecrets: []
+service:
+  type: ClusterIP
+  port: 80
+
+probes:
+  enabled: false
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: '0'
+  hostName: hostName
+  tls:
+    secretName: secretName
+secrets: {}
+resources:
+  limits:
+    cpu: cpuLimit
+    memory: memoryLimit
+  requests:
+    cpu: cpuRequests
+    memory: memoryRequests
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+environment:
+  stage: staging
+
+appSettings:
+  configMap: blip-plugin-broadcast
+  path: /app/config/default.json
+  subPath: default.json
+
+autoscale:
+  minReplicas: 1
+  maxReplicas: 3
+  averageCPUUtilization: 80
+
+team: lima
+
+annotations: {}

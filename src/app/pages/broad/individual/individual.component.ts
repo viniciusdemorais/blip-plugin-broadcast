@@ -24,18 +24,22 @@ export class IndividualComponent implements OnInit, OnDestroy {
 
   phoneNumber: string;
   email: string;
+  defaultConfig: string;
 
   template: any;
   templateDescription: any;
   templateVariables: any[] = [];
   bucketTemplate: BucketVariables;
+  defaultBucketTemplate: BucketVariables;
 
   constructor(
     private loadingService: LoadingService,
     private iframeService: IframeService,
     private configurationService: ConfigurationService,
     private notificationService: NotificationService
-  ) {}
+  ) {
+    this.defaultConfig = 'default-config'
+  }
 
   ngOnInit() {}
 
@@ -73,41 +77,50 @@ export class IndividualComponent implements OnInit, OnDestroy {
 
   async sendNotification() {
     this.loadingService.showLoad();
-    await this.getConfigurations(this.template.name);
+
+    if (this.template) {
+      await this.getConfigurations(this.template.name);
+    }
+    await this.getDefaultConfigurations();
+
     const notificationObj: NotificationIndividual = {
-      telephone: this.phoneNumber,
-      template: this.template.name,
-      language_code: this.template.language,
-      master_state: this.bucketTemplate.masterState,
-      flow_id: this.bucketTemplate.flowId,
-      state_id: this.bucketTemplate.stateId,
-      namespace: this.bucketTemplate.namespace,
+      telephone: this.phoneNumber ? this.phoneNumber.replace(/[^\d]+/g, "") : null,
+      template: this.template ? this.template.name : null,
+      language_code: this.template ? this.template.language : null,
+      master_state: this.defaultBucketTemplate.masterState,
+      flow_id: this.defaultBucketTemplate.flowId,
+      namespace: this.defaultBucketTemplate.namespace,
+      state_id: this.bucketTemplate ? this.bucketTemplate.stateId : null,
       params: this.variableValues(this.templateVariables),
       sender_email: this.email,
       trackOrigin: true
     };
-    this.notificationService
-      .sendIndividualNotification(notificationObj, this.botId, this.accessKey)
-      .pipe(
-        untilDestroyed(this),
-        finalize(() => {
-          this.loadingService.hiddeLoad();
-        })
-      )
-      .subscribe(
-        res => {
-          this.iframeService.showToast({
-            type: 'success',
-            message: 'Notificação enviada com sucesso!'
-          });
-        },
-        error => {
-          this.iframeService.showToast({
-            type: 'danger',
-            message: 'Falha ao enviar notificação!'
-          });
-        }
-      );
+    if (this.validationFields(notificationObj)){
+      this.notificationService
+        .sendIndividualNotification(notificationObj, this.botId, this.accessKey)
+        .pipe(
+          untilDestroyed(this),
+          finalize(() => {
+            this.loadingService.hiddeLoad();
+          })
+        )
+        .subscribe(
+          res => {
+            this.iframeService.showToast({
+              type: 'success',
+              message: 'Notificação enviada com sucesso!'
+            });
+          },
+          error => {
+            this.iframeService.showToast({
+              type: 'danger',
+              message: 'Falha ao enviar notificação!'
+            });
+          }
+        );
+    } else {
+      this.loadingService.hiddeLoad();
+    }
   }
 
   async getConfigurations(variable: any) {
@@ -119,5 +132,39 @@ export class IndividualComponent implements OnInit, OnDestroy {
         this.bucketTemplate = {};
       }
     );
+  }
+
+  async getDefaultConfigurations() {
+    await this.configurationService.getBucket(this.defaultConfig).then(
+      res => {
+        this.defaultBucketTemplate = res;
+      },
+      error => {
+        this.defaultBucketTemplate = {};
+      }
+    );
+  }
+
+  validationFields(variable: NotificationIndividual): boolean {
+    if (!variable.telephone) {
+      this.iframeService.showToast(
+        {
+          type: 'danger',
+          message: 'Você precisa definir o número de telefone!'
+        }
+      );
+      return false;
+    } 
+    if (!variable.namespace) {
+      this.iframeService.showToast(
+        {
+          type: 'danger',
+          message: 'Você precisa configurar o namespace para fazer os disparos!'
+        }
+      );
+      return false;
+    } 
+
+    return true;
   }
 }

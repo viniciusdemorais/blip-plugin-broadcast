@@ -24,8 +24,10 @@ export class SheetComponent implements OnInit, OnDestroy {
 
   email: string;
   phoneColumn: string;
+  defaultConfig: string;
 
   bucketTemplate: BucketVariables;
+  defaultBucketTemplate: BucketVariables;
   template: any;
   csvFile: File;
   templateDescription: any;
@@ -36,7 +38,9 @@ export class SheetComponent implements OnInit, OnDestroy {
     private iframeService: IframeService,
     private configurationService: ConfigurationService,
     private notificationService: NotificationService
-  ) {}
+  ) {
+    this.defaultConfig = 'default-config'
+  }
 
   ngOnInit() {}
 
@@ -79,19 +83,25 @@ export class SheetComponent implements OnInit, OnDestroy {
 
   async sendCsvNotification() {
     this.loadingService.showLoad();
-    await this.getConfigurations(this.template.name);
+
+    if (this.template) {
+      await this.getConfigurations(this.template.name);
+    }
+    await this.getDefaultConfigurations();
+
     const notificationObj: NotificationCsv = {
       phoneColumn: this.phoneColumn,
       senderEmail: this.email,
-      template: this.template.name,
-      languageCode: this.template.language,
-      wabanamespace: this.bucketTemplate.namespace,
-      masterState: this.bucketTemplate.masterState,
-      flowId: this.bucketTemplate.flowId,
-      stateId: this.bucketTemplate.stateId,
+      template: this.template ? this.template.name : null,
+      languageCode: this.template ? this.template.language : null,
+      wabanamespace: this.defaultBucketTemplate.namespace,
+      masterState: this.defaultBucketTemplate.masterState,
+      flowId: this.defaultBucketTemplate.flowId,
+      stateId: this.bucketTemplate ? this.bucketTemplate.stateId : null,
       formFile: this.csvFile,
       scheduleTime: '0'
     };
+    if (this.validationFields(notificationObj)) {
     this.notificationService
       .sendCsvNotification(notificationObj, this.botId, this.accessKey)
       .pipe(
@@ -114,6 +124,9 @@ export class SheetComponent implements OnInit, OnDestroy {
           });
         }
       );
+    } else {
+      this.loadingService.hiddeLoad();
+    }
   }
 
   async getConfigurations(variable: any) {
@@ -125,5 +138,48 @@ export class SheetComponent implements OnInit, OnDestroy {
         this.bucketTemplate = {};
       }
     );
+  }
+
+  async getDefaultConfigurations() {
+    await this.configurationService.getBucket(this.defaultConfig).then(
+      res => {
+        this.defaultBucketTemplate = res;
+      },
+      error => {
+        this.defaultBucketTemplate = {};
+      }
+    );
+  }
+
+  validationFields(variable: NotificationCsv): boolean {
+    if (!variable.formFile) {
+      this.iframeService.showToast(
+        {
+          type: 'danger',
+          message: 'Você precisa definir a planilha para que seja realizado o envio!'
+        }
+      );
+      return false;
+    } 
+    if (!variable.phoneColumn) {
+      this.iframeService.showToast(
+        {
+          type: 'danger',
+          message: 'Você precisa definir o nome da coluna onde se encontra o número de telefone!'
+        }
+      );
+      return false;
+    } 
+    if (!variable.wabanamespace) {
+      this.iframeService.showToast(
+        {
+          type: 'danger',
+          message: 'Você precisa configurar o namespace para fazer os disparos!'
+        }
+      );
+      return false;
+    } 
+
+    return true;
   }
 }
