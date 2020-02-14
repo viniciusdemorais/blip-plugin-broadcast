@@ -1,0 +1,47 @@
+@import "~@angular/material/theming";
+@include mat-core();
+
+$black-87-opacity: rgba(0, 0, 0, 0.87);
+$white-87-opacity: rgba(255, 255, 255, 0.87);
+
+$mat-blip: (
+  50: #e3f5f6,
+  100: #b9e7e8,
+  200: #8ad7d9,
+  300: #5bc7c9,
+  400: #38bbbe,
+  500: #15afb2,
+  600: #12a8ab,
+  700: #0f9fa2,
+  800: #0c9699,
+  900: #06868a,
+  A100: #b7fdff,
+  A200: #84fbff,
+  A400: #51f9ff,
+  A700: #37f8ff,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: white,
+    600: white,
+    700: white,
+    800: $white-87-opacity,
+    900: $white-87-opacity,
+    A100: $black-87-opacity,
+    A200: white,
+    A400: white,
+    A700: white
+  )
+);
+
+$my-app-primary: mat-palette($mat-blip);
+$my-app-accent: mat-palette($mat-blip, 500, 900, A100);
+$my-app-theme: mat-light-theme($my-app-primary, $my-app-accent);
+
+.alternate-theme {
+  $alternate-theme: mat-light-theme($my-app-primary, $my-app-accent);
+  @include angular-material-theme($alternate-theme);
+}

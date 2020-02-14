@@ -1,21 +1,9 @@
 {
   "name": "blip-broad-plugin",
   "short_name": "blip-broad-plugin",
-  "theme_color": "#488aff",
-  "background_color": "#488aff",
+  "theme_color": "#06868a",
+  "background_color": "#06868a",
   "scope": "/",
   "start_url": "/",
-  "display": "standalone",
-  "icons": [
-    {
-      // "src": "assets/logo.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    },
-    {
-      // "src": "assets/logo@192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    }
-  ]
+  "display": "standalone"
 }

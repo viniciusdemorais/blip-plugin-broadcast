@@ -39,7 +39,7 @@ export class SheetComponent implements OnInit, OnDestroy {
     private configurationService: ConfigurationService,
     private notificationService: NotificationService
   ) {
-    this.defaultConfig = 'default-config'
+    this.defaultConfig = 'default-config';
   }
 
   ngOnInit() {}
@@ -102,28 +102,28 @@ export class SheetComponent implements OnInit, OnDestroy {
       scheduleTime: '0'
     };
     if (this.validationFields(notificationObj)) {
-    this.notificationService
-      .sendCsvNotification(notificationObj, this.botId, this.accessKey)
-      .pipe(
-        untilDestroyed(this),
-        finalize(() => {
-          this.loadingService.hiddeLoad();
-        })
-      )
-      .subscribe(
-        res => {
-          this.iframeService.showToast({
-            type: 'success',
-            message: 'Notificação enviada com sucesso!'
-          });
-        },
-        error => {
-          this.iframeService.showToast({
-            type: 'danger',
-            message: 'Falha ao enviar notificação!'
-          });
-        }
-      );
+      this.notificationService
+        .sendCsvNotification(notificationObj, this.botId, this.accessKey)
+        .pipe(
+          untilDestroyed(this),
+          finalize(() => {
+            this.loadingService.hiddeLoad();
+          })
+        )
+        .subscribe(
+          res => {
+            this.iframeService.showToast({
+              type: 'success',
+              message: 'Notificação enviada com sucesso!'
+            });
+          },
+          error => {
+            this.iframeService.showToast({
+              type: 'danger',
+              message: 'Falha ao enviar notificação!'
+            });
+          }
+        );
     } else {
       this.loadingService.hiddeLoad();
     }
@@ -153,32 +153,26 @@ export class SheetComponent implements OnInit, OnDestroy {
 
   validationFields(variable: NotificationCsv): boolean {
     if (!variable.formFile) {
-      this.iframeService.showToast(
-        {
-          type: 'danger',
-          message: 'Você precisa definir a planilha para que seja realizado o envio!'
-        }
-      );
+      this.iframeService.showToast({
+        type: 'danger',
+        message: 'Você precisa definir a planilha para que seja realizado o envio!'
+      });
       return false;
-    } 
+    }
     if (!variable.phoneColumn) {
-      this.iframeService.showToast(
-        {
-          type: 'danger',
-          message: 'Você precisa definir o nome da coluna onde se encontra o número de telefone!'
-        }
-      );
+      this.iframeService.showToast({
+        type: 'danger',
+        message: 'Você precisa definir o nome da coluna onde se encontra o número de telefone!'
+      });
       return false;
-    } 
+    }
     if (!variable.wabanamespace) {
-      this.iframeService.showToast(
-        {
-          type: 'danger',
-          message: 'Você precisa configurar o namespace para fazer os disparos!'
-        }
-      );
+      this.iframeService.showToast({
+        type: 'danger',
+        message: 'Você precisa configurar o namespace para fazer os disparos!'
+      });
       return false;
-    } 
+    }
 
     return true;
   }

@@ -38,7 +38,7 @@ export class IndividualComponent implements OnInit, OnDestroy {
     private configurationService: ConfigurationService,
     private notificationService: NotificationService
   ) {
-    this.defaultConfig = 'default-config'
+    this.defaultConfig = 'default-config';
   }
 
   ngOnInit() {}
@@ -84,7 +84,7 @@ export class IndividualComponent implements OnInit, OnDestroy {
     await this.getDefaultConfigurations();
 
     const notificationObj: NotificationIndividual = {
-      telephone: this.phoneNumber ? this.phoneNumber.replace(/[^\d]+/g, "") : null,
+      telephone: this.phoneNumber ? this.phoneNumber.replace(/[^\d]+/g, '') : null,
       template: this.template ? this.template.name : null,
       language_code: this.template ? this.template.language : null,
       master_state: this.defaultBucketTemplate.masterState,
@@ -95,7 +95,7 @@ export class IndividualComponent implements OnInit, OnDestroy {
       sender_email: this.email,
       trackOrigin: true
     };
-    if (this.validationFields(notificationObj)){
+    if (this.validationFields(notificationObj)) {
       this.notificationService
         .sendIndividualNotification(notificationObj, this.botId, this.accessKey)
         .pipe(
@@ -147,23 +147,19 @@ export class IndividualComponent implements OnInit, OnDestroy {
 
   validationFields(variable: NotificationIndividual): boolean {
     if (!variable.telephone) {
-      this.iframeService.showToast(
-        {
-          type: 'danger',
-          message: 'Você precisa definir o número de telefone!'
-        }
-      );
+      this.iframeService.showToast({
+        type: 'danger',
+        message: 'Você precisa definir o número de telefone!'
+      });
       return false;
-    } 
+    }
     if (!variable.namespace) {
-      this.iframeService.showToast(
-        {
-          type: 'danger',
-          message: 'Você precisa configurar o namespace para fazer os disparos!'
-        }
-      );
+      this.iframeService.showToast({
+        type: 'danger',
+        message: 'Você precisa configurar o namespace para fazer os disparos!'
+      });
       return false;
-    } 
+    }
 
     return true;
   }
