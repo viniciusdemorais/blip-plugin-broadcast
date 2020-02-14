@@ -15,6 +15,8 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { IndividualComponent } from './individual/individual.component';
 import { SheetComponent } from './sheet/sheet.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
+import { ConfigurationGeneralComponent } from './configuration-general/configuration-general.component';
+import { ConfigurationGeneralService } from '@app/services/configuration-general.service';
 
 @NgModule({
   imports: [
@@ -28,7 +30,7 @@ import { ConfigurationComponent } from './configuration/configuration.component'
     MaterialFileInputModule,
     BroadRoutingModule
   ],
-  declarations: [BroadComponent, IndividualComponent, SheetComponent, ConfigurationComponent],
-  providers: [BlipService, NotificationService]
+  declarations: [BroadComponent, IndividualComponent, SheetComponent, ConfigurationComponent, ConfigurationGeneralComponent],
+  providers: [BlipService, NotificationService, ConfigurationGeneralService]
 })
 export class BroadModule {}

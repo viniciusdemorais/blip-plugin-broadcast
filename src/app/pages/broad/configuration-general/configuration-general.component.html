@@ -1,0 +1,19 @@
+<mat-card-content class="m-4">
+  <div class="row mt-5">
+    <mat-form-field class="col-md-4">
+      <mat-label for="namespace">Namespace</mat-label>
+      <input id="namespace" matInput placeholder="Ex. de0fe0f_qweq_dass" [(ngModel)]="namespace" />
+    </mat-form-field>
+    <mat-form-field class="col-md-4">
+      <mat-label for="masterState">Master State</mat-label>
+      <input id="masterState" matInput placeholder="Apenas apenas para bots roteadores" [(ngModel)]="masterState" />
+    </mat-form-field>
+    <mat-form-field class="col-md-4">
+      <mat-label for="flowId">Flow ID</mat-label>
+      <input id="flowId" matInput placeholder="Identificador do fluxo" [(ngModel)]="flowId" />
+    </mat-form-field>
+  </div>
+  <button class="d-flex mx-auto mt-5" mat-raised-button color="primary" (click)="saveConfigurations()">
+    Salvar configurações<mat-icon class="ml-2">send</mat-icon>
+  </button>
+</mat-card-content>

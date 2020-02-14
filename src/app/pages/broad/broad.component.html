@@ -29,6 +29,13 @@
           </ng-template>
           <app-broad-configuration [templates]="templates"></app-broad-configuration>
         </mat-tab>
+        <mat-tab *ngIf="showConfigurations">
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon mr-2">build</mat-icon>
+            Configurações gerais
+          </ng-template>
+          <app-broad-configuration-general></app-broad-configuration-general>
+        </mat-tab>
       </mat-tab-group>
     </mat-card>
   </div>

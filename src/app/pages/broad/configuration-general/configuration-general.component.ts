@@ -1,56 +1,49 @@
 import { OnInit, OnDestroy, Component, Input, Output, EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs';
-import { ConfigurationService } from '@app/services/configuration.service';
+import { ConfigurationGeneralService } from '@app/services/configuration-general.service';
 import { IframeService } from '@app/services/iframe.service';
 import { LoadingService } from '@app/services/loading.service';
 
 @Component({
-  selector: 'app-broad-configuration',
-  templateUrl: './configuration.component.html',
-  styleUrls: ['./configuration.component.scss']
+  selector: 'app-broad-configuration-general',
+  templateUrl: './configuration-general.component.html',
+  styleUrls: ['./configuration-general.component.scss']
 })
-export class ConfigurationComponent implements OnInit, OnDestroy {
-  @Input() templates: any[];
-
+export class ConfigurationGeneralComponent implements OnInit, OnDestroy {
   unsub = new Subject();
 
-  stateId?: string;
-
-  template: any;
-  templateDescription: any;
-  templateVariables: any[] = [];
+  masterState?: string;
+  flowId?: string;
+  namespace?: string;
+  templateName: string;
 
   constructor(
     private iframeService: IframeService,
-    private configurationService: ConfigurationService,
+    private configurationGeneralService: ConfigurationGeneralService,
     private loadingService: LoadingService
-  ) {}
+  ) {
+    this.templateName = 'default-config';
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getConfigurations();
+  }
 
   ngOnDestroy() {
     this.unsub.next();
     this.unsub.unsubscribe();
   }
 
-  async selectedTemplateBucket(event: any) {
-    this.templateVariables = [];
-    this.template = this.templates.find(t => t.id == event.value);
-    this.templateDescription = this.template.components.find((td: any) => td.type == 'BODY').text;
-    await this.getConfigurations(this.template.name);
-  }
-
-  variableId(text: any): string {
-    return 'var' + text.replace(/{*}*/g, '');
-  }
-
   async saveConfigurations() {
     this.loadingService.showLoad();
+
     const resources = {
-      stateId: this.stateId
+      masterState: this.masterState,
+      flowId: this.flowId,
+      namespace: this.namespace
     };
-    await this.configurationService
-      .storeBucket(this.template.name, resources)
+    await this.configurationGeneralService
+      .storeBucket(this.templateName, resources)
       .then(
         res => {
           this.iframeService.showToast({
@@ -70,16 +63,20 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
       });
   }
 
-  async getConfigurations(variable: any) {
+  async getConfigurations() {
     this.loadingService.showLoad();
-    const bucket = await this.configurationService
-      .getBucket(variable)
+    const bucket = await this.configurationGeneralService
+      .getBucket(this.templateName)
       .then(
         res => {
-          this.stateId = res.stateId ? res.stateId : null;
+          this.masterState = res.masterState ? res.masterState : null;
+          this.flowId = res.flowId ? res.flowId : null;
+          this.namespace = res.namespace ? res.namespace : null;
         },
         error => {
-          this.stateId = null;
+          this.masterState = null;
+          this.flowId = null;
+          this.namespace = null;
         }
       )
       .finally(() => {
